@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { CATEGORIES } from '@/lib/categories'
 
 export default function Nav() {
@@ -9,18 +10,24 @@ export default function Nav() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
 
   return (
-    <header className="bg-[#003DA5] text-white shadow-md sticky top-0 z-50">
+    <header className="bg-[#1C3A6E] text-white shadow-md sticky top-0 z-50">
       {/* Top bar */}
-      <div className="bg-[#002880] text-sm py-1.5 px-4 text-center text-blue-200">
+      <div className="bg-[#132D5E] text-sm py-1.5 px-4 text-center text-blue-200">
         Gratis fragt • Min. 3 års garanti • Direkte fra Amazon.de
       </div>
 
       {/* Main nav */}
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 font-bold text-2xl tracking-tight">
-          <span className="text-[#FFB300]">NET</span>
-          <span>PRO</span>
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/logo.png"
+            alt="Netpro — Bosch Professional Partner"
+            height={44}
+            width={180}
+            className="object-contain brightness-0 invert"
+            priority
+          />
         </Link>
 
         {/* Desktop nav */}
@@ -50,7 +57,7 @@ export default function Nav() {
                     <Link
                       key={sub.slug}
                       href={`/${cat.slug}/${sub.slug}`}
-                      className="block px-4 py-2 text-sm hover:bg-[#E8F0FE] hover:text-[#003DA5] transition-colors"
+                      className="block px-4 py-2 text-sm hover:bg-[#EEF2FA] hover:text-[#1C3A6E] transition-colors"
                     >
                       {sub.name}
                     </Link>
@@ -76,7 +83,7 @@ export default function Nav() {
                   <Link
                     key={cat.slug}
                     href={`/${cat.slug}`}
-                    className="block px-4 py-2 text-sm hover:bg-[#E8F0FE] hover:text-[#003DA5] transition-colors"
+                    className="block px-4 py-2 text-sm hover:bg-[#EEF2FA] hover:text-[#1C3A6E] transition-colors"
                   >
                     {cat.icon} {cat.name}
                   </Link>
@@ -116,7 +123,7 @@ export default function Nav() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="lg:hidden bg-[#002880] border-t border-white/10 pb-4">
+        <div className="lg:hidden bg-[#132D5E] border-t border-white/10 pb-4">
           <div className="max-w-7xl mx-auto px-4 py-2">
             <Link
               href="/search"

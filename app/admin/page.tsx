@@ -169,7 +169,7 @@ export default function AdminPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 w-full max-w-sm">
           <div className="text-center mb-6">
-            <div className="text-3xl font-bold text-[#003DA5] mb-1">Netpro</div>
+            <div className="text-3xl font-bold text-[#1C3A6E] mb-1">Netpro</div>
             <div className="text-gray-500 text-sm">Admin — produktstyring</div>
           </div>
           <form onSubmit={handleLogin} className="space-y-4">
@@ -178,13 +178,13 @@ export default function AdminPage() {
               placeholder="Adgangskode"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#003DA5]"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1C3A6E]"
               autoFocus
             />
             {authError && <p className="text-red-500 text-sm">{authError}</p>}
             <button
               type="submit"
-              className="w-full bg-[#003DA5] text-white rounded-lg py-2.5 text-sm font-medium hover:bg-[#002d7a] transition-colors"
+              className="w-full bg-[#1C3A6E] text-white rounded-lg py-2.5 text-sm font-medium hover:bg-[#002d7a] transition-colors"
             >
               Log ind
             </button>
@@ -200,7 +200,7 @@ export default function AdminPage() {
       {/* Header */}
       <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
         <div>
-          <span className="text-xl font-bold text-[#003DA5]">Netpro Admin</span>
+          <span className="text-xl font-bold text-[#1C3A6E]">Netpro Admin</span>
           <span className="ml-3 text-sm text-gray-500">Produktstyring</span>
         </div>
         <div className="flex items-center gap-3">
@@ -224,7 +224,7 @@ export default function AdminPage() {
             { label: 'Tilbud', value: products.filter((p) => p.is_on_sale).length },
           ].map((s) => (
             <div key={s.label} className="bg-white rounded-xl border border-gray-200 p-4">
-              <div className="text-2xl font-bold text-[#003DA5]">{s.value}</div>
+              <div className="text-2xl font-bold text-[#1C3A6E]">{s.value}</div>
               <div className="text-sm text-gray-500">{s.label}</div>
             </div>
           ))}
@@ -237,11 +237,11 @@ export default function AdminPage() {
             placeholder="Søg titel, ASIN, brand..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="border border-gray-300 rounded-lg px-4 py-2 text-sm w-72 focus:outline-none focus:ring-2 focus:ring-[#003DA5]"
+            className="border border-gray-300 rounded-lg px-4 py-2 text-sm w-72 focus:outline-none focus:ring-2 focus:ring-[#1C3A6E]"
           />
           <button
             onClick={openAdd}
-            className="bg-[#003DA5] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#002d7a] transition-colors"
+            className="bg-[#1C3A6E] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#002d7a] transition-colors"
           >
             + Tilføj produkt
           </button>
@@ -295,7 +295,7 @@ export default function AdminPage() {
                         href={p.amazon_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-mono text-xs text-[#003DA5] hover:underline"
+                        className="font-mono text-xs text-[#1C3A6E] hover:underline"
                       >
                         {p.asin}
                       </a>
@@ -316,7 +316,7 @@ export default function AdminPage() {
                           onClick={() => toggleFlag(p.id, flag, p[flag])}
                           className={`w-6 h-6 rounded text-xs font-bold transition-colors ${
                             p[flag]
-                              ? 'bg-[#003DA5] text-white'
+                              ? 'bg-[#1C3A6E] text-white'
                               : 'bg-gray-100 text-gray-300 hover:bg-gray-200'
                           }`}
                         >
@@ -327,7 +327,7 @@ export default function AdminPage() {
                     <td className="px-4 py-3 text-right">
                       <button
                         onClick={() => openEdit(p)}
-                        className="text-gray-400 hover:text-[#003DA5] mr-3 text-xs"
+                        className="text-gray-400 hover:text-[#1C3A6E] mr-3 text-xs"
                       >
                         Rediger
                       </button>
@@ -365,7 +365,7 @@ export default function AdminPage() {
                     value={form.asin}
                     onChange={(e) => setForm({ ...form, asin: e.target.value })}
                     placeholder="B09F3XR7QH"
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#003DA5]"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1C3A6E]"
                     disabled={!!editProduct}
                   />
                   {form.asin && (
@@ -373,7 +373,7 @@ export default function AdminPage() {
                       href={`https://www.amazon.de/dp/${form.asin}?tag=netpro0e-21`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs text-[#003DA5] hover:underline mt-1 inline-block"
+                      className="text-xs text-[#1C3A6E] hover:underline mt-1 inline-block"
                     >
                       Åbn på Amazon.de →
                     </a>
@@ -384,7 +384,7 @@ export default function AdminPage() {
                   <select
                     value={form.category_id}
                     onChange={(e) => setForm({ ...form, category_id: e.target.value })}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#003DA5]"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1C3A6E]"
                   >
                     <option value="">— Vælg kategori —</option>
                     {categories.map((c) => (
@@ -403,7 +403,7 @@ export default function AdminPage() {
                   value={form.title}
                   onChange={(e) => setForm({ ...form, title: e.target.value })}
                   placeholder="Bosch Professional GSR 18V-55 skruemaskine"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#003DA5]"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1C3A6E]"
                 />
               </div>
 
@@ -414,7 +414,7 @@ export default function AdminPage() {
                     value={form.brand}
                     onChange={(e) => setForm({ ...form, brand: e.target.value })}
                     placeholder="Bosch Professional"
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#003DA5]"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1C3A6E]"
                   />
                 </div>
                 <div>
@@ -423,7 +423,7 @@ export default function AdminPage() {
                     value={form.model}
                     onChange={(e) => setForm({ ...form, model: e.target.value })}
                     placeholder="GSR 18V-55"
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#003DA5]"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1C3A6E]"
                   />
                 </div>
               </div>
@@ -436,7 +436,7 @@ export default function AdminPage() {
                     value={form.price}
                     onChange={(e) => setForm({ ...form, price: e.target.value })}
                     placeholder="1299"
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#003DA5]"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1C3A6E]"
                   />
                 </div>
                 <div>
@@ -446,7 +446,7 @@ export default function AdminPage() {
                     value={form.original_price}
                     onChange={(e) => setForm({ ...form, original_price: e.target.value })}
                     placeholder="1599"
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#003DA5]"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1C3A6E]"
                   />
                 </div>
               </div>
@@ -457,7 +457,7 @@ export default function AdminPage() {
                   value={form.image_url}
                   onChange={(e) => setForm({ ...form, image_url: e.target.value })}
                   placeholder="https://m.media-amazon.com/images/I/..."
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#003DA5]"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1C3A6E]"
                 />
                 <p className="text-xs text-gray-400 mt-1">Find billede-URL på Amazon produktsiden (højreklik → Kopiér billedadresse)</p>
               </div>
@@ -469,7 +469,7 @@ export default function AdminPage() {
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
                   rows={3}
                   placeholder="Kort produktbeskrivelse..."
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#003DA5] resize-none"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1C3A6E] resize-none"
                 />
               </div>
 
@@ -484,7 +484,7 @@ export default function AdminPage() {
                       type="checkbox"
                       checked={form[key]}
                       onChange={(e) => setForm({ ...form, [key]: e.target.checked })}
-                      className="w-4 h-4 accent-[#003DA5]"
+                      className="w-4 h-4 accent-[#1C3A6E]"
                     />
                     {label}
                   </label>
@@ -502,7 +502,7 @@ export default function AdminPage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="bg-[#003DA5] text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-[#002d7a] disabled:opacity-50 transition-colors"
+                  className="bg-[#1C3A6E] text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-[#002d7a] disabled:opacity-50 transition-colors"
                 >
                   {saving ? 'Gemmer...' : editProduct ? 'Gem ændringer' : 'Tilføj produkt'}
                 </button>

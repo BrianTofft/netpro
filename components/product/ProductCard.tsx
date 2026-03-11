@@ -11,7 +11,7 @@ export default function ProductCard({ product }: Props) {
   const discount = calcDiscount(product.price, product.original_price)
 
   return (
-    <div className="bg-white rounded-xl border border-[#E0E0E0] hover:border-[#003DA5] hover:shadow-lg transition-all group flex flex-col">
+    <div className="bg-white rounded-xl border border-[#E0E0E0] hover:border-[#1C3A6E] hover:shadow-lg transition-all group flex flex-col">
       {/* Image */}
       <Link href={`/produkt/${product.asin}`} className="relative block aspect-square overflow-hidden rounded-t-xl bg-[#F5F5F5]">
         {product.image_url ? (
@@ -48,13 +48,13 @@ export default function ProductCard({ product }: Props) {
         {product.brand && (
           <div className="text-xs text-[#6B6B6B] uppercase tracking-wide mb-1">{product.brand}</div>
         )}
-        <Link href={`/produkt/${product.asin}`} className="font-medium text-sm leading-snug hover:text-[#003DA5] transition-colors line-clamp-2 mb-2 flex-1">
+        <Link href={`/produkt/${product.asin}`} className="font-medium text-sm leading-snug hover:text-[#1C3A6E] transition-colors line-clamp-2 mb-2 flex-1">
           {product.title}
         </Link>
 
         {product.rating && (
           <div className="flex items-center gap-1 mb-2">
-            <div className="flex text-[#FFB300] text-xs">
+            <div className="flex text-[#E3000B] text-xs">
               {'★'.repeat(Math.round(product.rating))}
               {'☆'.repeat(5 - Math.round(product.rating))}
             </div>
@@ -81,7 +81,7 @@ export default function ProductCard({ product }: Props) {
           href={product.amazon_url}
           target="_blank"
           rel="noopener noreferrer sponsored"
-          className="block w-full text-center bg-[#FFB300] hover:bg-[#E6A000] text-[#1A1A1A] font-bold text-sm py-2.5 rounded-lg transition-colors"
+          className="block w-full text-center bg-[#E3000B] hover:bg-[#C5000A] text-[#1A1A1A] font-bold text-sm py-2.5 rounded-lg transition-colors"
         >
           Køb på Amazon
         </a>

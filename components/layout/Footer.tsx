@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { CATEGORIES } from '@/lib/categories'
 
 export default function Footer() {
@@ -7,8 +8,14 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Brand */}
         <div>
-          <div className="text-white font-bold text-2xl mb-3">
-            <span className="text-[#FFB300]">NET</span>PRO
+          <div className="mb-4">
+            <Image
+              src="/logo.png"
+              alt="Netpro — Bosch Professional Partner"
+              height={40}
+              width={160}
+              className="object-contain brightness-0 invert"
+            />
           </div>
           <p className="text-sm leading-relaxed mb-4">
             Professionelt Bosch-værktøj til danske fagfolk. Konkurrencedygtige priser via Amazon.de med dansk support.
@@ -53,23 +60,23 @@ export default function Footer() {
           <h3 className="text-white font-semibold mb-4">Fordele</h3>
           <ul className="space-y-3 text-sm">
             <li className="flex items-start gap-2">
-              <span className="text-[#FFB300] mt-0.5">✓</span>
+              <span className="text-[#E3000B] mt-0.5">✓</span>
               <span>Minimum 3 års garanti på alt Bosch Professional</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-[#FFB300] mt-0.5">✓</span>
+              <span className="text-[#E3000B] mt-0.5">✓</span>
               <span>Gratis fragt 1–2 hverdage</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-[#FFB300] mt-0.5">✓</span>
+              <span className="text-[#E3000B] mt-0.5">✓</span>
               <span>Priser under danske forhandlere</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-[#FFB300] mt-0.5">✓</span>
+              <span className="text-[#E3000B] mt-0.5">✓</span>
               <span>Bosch PRO360 registrering inkluderet</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-[#FFB300] mt-0.5">✓</span>
+              <span className="text-[#E3000B] mt-0.5">✓</span>
               <span>Leveret via Amazon.de</span>
             </li>
           </ul>
