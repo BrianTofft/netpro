@@ -1,6 +1,11 @@
 import { createAdminClient } from './supabase-admin'
 import type { Product } from './database.types'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function cast<T>(data: any): T {
+  return data as T
+}
+
 export async function getFeaturedProducts(): Promise<Product[]> {
   const supabase = createAdminClient()
   const { data } = await supabase
@@ -9,7 +14,7 @@ export async function getFeaturedProducts(): Promise<Product[]> {
     .eq('is_featured', true)
     .order('created_at', { ascending: false })
     .limit(8)
-  return data ?? []
+  return cast<Product[]>(data ?? [])
 }
 
 export async function getNewProducts(): Promise<Product[]> {
@@ -20,7 +25,7 @@ export async function getNewProducts(): Promise<Product[]> {
     .eq('is_new', true)
     .order('created_at', { ascending: false })
     .limit(8)
-  return data ?? []
+  return cast<Product[]>(data ?? [])
 }
 
 export async function getSaleProducts(): Promise<Product[]> {
@@ -31,7 +36,7 @@ export async function getSaleProducts(): Promise<Product[]> {
     .eq('is_on_sale', true)
     .order('created_at', { ascending: false })
     .limit(8)
-  return data ?? []
+  return cast<Product[]>(data ?? [])
 }
 
 export async function getProductsByCategory(
@@ -46,7 +51,7 @@ export async function getProductsByCategory(
     .order('is_featured', { ascending: false })
     .order('created_at', { ascending: false })
     .limit(limit)
-  return data ?? []
+  return cast<Product[]>(data ?? [])
 }
 
 export async function getProductByAsin(asin: string): Promise<Product | null> {
@@ -56,7 +61,7 @@ export async function getProductByAsin(asin: string): Promise<Product | null> {
     .select('*')
     .eq('asin', asin)
     .single()
-  return data ?? null
+  return cast<Product | null>(data ?? null)
 }
 
 export async function searchProducts(query: string): Promise<Product[]> {
@@ -67,7 +72,7 @@ export async function searchProducts(query: string): Promise<Product[]> {
     .or(`title.ilike.%${query}%,description.ilike.%${query}%,brand.ilike.%${query}%,model.ilike.%${query}%`)
     .order('is_featured', { ascending: false })
     .limit(24)
-  return data ?? []
+  return cast<Product[]>(data ?? [])
 }
 
 export async function getCategoryIdBySlug(slug: string): Promise<string | null> {
@@ -77,8 +82,7 @@ export async function getCategoryIdBySlug(slug: string): Promise<string | null> 
     .select('*')
     .eq('slug', slug)
     .single()
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (data as any)?.id ?? null
+  return cast<{ id: string } | null>(data)?.id ?? null
 }
 
 export function formatPrice(price: number | null): string {

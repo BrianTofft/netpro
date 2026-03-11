@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
   const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
   const { data: staleProducts } = await supabase
     .from('products')
-    .select('asin, category_id')
+    .select('*')
     .or(`cached_at.is.null,cached_at.lt.${cutoff}`)
     .limit(100)
 
@@ -23,7 +23,8 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ message: 'Ingen produkter at opdatere' })
   }
 
-  const asins = staleProducts.map((p) => p.asin)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const asins = (staleProducts as any[]).map((p) => p.asin as string)
 
   try {
     const updated = await getProductsFromAmazon(asins)
