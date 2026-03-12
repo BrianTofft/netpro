@@ -85,6 +85,49 @@ export async function getCategoryIdBySlug(slug: string): Promise<string | null> 
   return cast<{ id: string } | null>(data)?.id ?? null
 }
 
+// Returnerer { slug → id } for en liste af slugs
+export async function getCategoryIdsBySlugs(slugs: string[]): Promise<Record<string, string>> {
+  if (slugs.length === 0) return {}
+  const supabase = createAdminClient()
+  const { data } = await supabase
+    .from('categories')
+    .select('id, slug')
+    .in('slug', slugs)
+  const map: Record<string, string> = {}
+  cast<{ id: string; slug: string }[]>(data ?? []).forEach((c) => { map[c.slug] = c.id })
+  return map
+}
+
+// Returnerer { categoryId → antal produkter }
+export async function getProductCountsByCategories(categoryIds: string[]): Promise<Record<string, number>> {
+  if (categoryIds.length === 0) return {}
+  const supabase = createAdminClient()
+  const { data } = await supabase
+    .from('products')
+    .select('category_id')
+    .in('category_id', categoryIds)
+  const counts: Record<string, number> = {}
+  categoryIds.forEach((id) => { counts[id] = 0 })
+  cast<{ category_id: string | null }[]>(data ?? []).forEach((p) => {
+    if (p.category_id) counts[p.category_id] = (counts[p.category_id] ?? 0) + 1
+  })
+  return counts
+}
+
+// Henter produkter fra ALLE angivne kategorier (til hoved-kategoriside)
+export async function getProductsByCategories(categoryIds: string[], limit = 48): Promise<Product[]> {
+  if (categoryIds.length === 0) return []
+  const supabase = createAdminClient()
+  const { data } = await supabase
+    .from('products')
+    .select('*')
+    .in('category_id', categoryIds)
+    .order('is_featured', { ascending: false })
+    .order('created_at', { ascending: false })
+    .limit(limit)
+  return cast<Product[]>(data ?? [])
+}
+
 export function formatPrice(price: number | null): string {
   if (price === null) return 'Se pris'
   return new Intl.NumberFormat('da-DK', {
