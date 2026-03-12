@@ -65,15 +65,18 @@ export default function ProductCard({ product }: Props) {
         )}
 
         {/* Price */}
-        <div className="flex items-center gap-2 mb-3">
-          <span className="font-bold text-lg text-[#1A1A1A]">
-            {formatPrice(product.price)}
-          </span>
-          {product.original_price && product.original_price > (product.price ?? 0) && (
-            <span className="text-sm text-[#6B6B6B] line-through">
-              {formatPrice(product.original_price)}
+        <div className="mb-3">
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-lg text-[#1A1A1A]">
+              {formatPrice(product.price)}
             </span>
-          )}
+            {product.original_price && product.original_price > (product.price ?? 0) && (
+              <span className="text-sm text-[#6B6B6B] line-through">
+                {formatPrice(product.original_price)}
+              </span>
+            )}
+          </div>
+          <div className="text-xs text-[#6B6B6B]">inkl. moms</div>
         </div>
 
         {/* CTA */}

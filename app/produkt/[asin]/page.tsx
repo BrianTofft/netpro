@@ -101,6 +101,7 @@ export default async function ProductPage({ params }: Props) {
                 <span className="text-xl text-[#6B6B6B] line-through">{formatPrice(product.original_price)}</span>
               )}
             </div>
+            <div className="text-xs text-[#6B6B6B] mb-1">inkl. moms</div>
             {discount && (
               <div className="text-sm text-red-600 font-medium">Du sparer {formatPrice((product.original_price ?? 0) - (product.price ?? 0))}</div>
             )}
