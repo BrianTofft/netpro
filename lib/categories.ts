@@ -64,11 +64,12 @@ export const CATEGORIES: Category[] = [
     name: 'Saveteknik',
     icon: '🪚',
     subs: [
-      { slug: 'bajonetsave', name: 'Bajonetsave' },
-      { slug: 'bordsave', name: 'Bordsave' },
-      { slug: 'kap-geringssave', name: 'Kap-/geringssave' },
       { slug: 'rundsave', name: 'Rundsave' },
+      { slug: 'dyksave', name: 'Dyksave' },
       { slug: 'stiksave', name: 'Stiksave' },
+      { slug: 'bajonetsave', name: 'Bajonetsave' },
+      { slug: 'kadesave', name: 'Kædesave' },
+      { slug: 'tilbehor-save', name: 'Tilbehør til save' },
     ],
   },
   {
