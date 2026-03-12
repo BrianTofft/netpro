@@ -63,7 +63,6 @@ export default function BoschShowcase() {
                 alt={panel.alt}
                 fill
                 className="object-cover opacity-80 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
-                onError={() => {}} // Ignorér fejl — gradient vises i stedet
               />
               {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
