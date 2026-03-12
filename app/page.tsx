@@ -6,7 +6,7 @@ import WhyNetpro from '@/components/home/WhyNetpro'
 import Testimonials from '@/components/home/Testimonials'
 import { getFeaturedProducts, getNewProducts, getSaleProducts } from '@/lib/products'
 
-export const revalidate = 3600
+export const revalidate = 60
 
 export default async function HomePage() {
   const [featured, newProducts, saleProducts] = await Promise.all([
