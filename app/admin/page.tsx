@@ -30,7 +30,7 @@ interface Product {
 const EMPTY_FORM = {
   asin: '',
   title: '',
-  brand: '',
+  brand: 'Bosch Professional',
   model: '',
   price: '',
   original_price: '',
@@ -219,7 +219,6 @@ export default function AdminPage() {
         <div className="grid grid-cols-4 gap-4 mb-8">
           {[
             { label: 'Produkter i alt', value: products.length },
-            { label: 'Featured', value: products.filter((p) => p.is_featured).length },
             { label: 'Nyheder', value: products.filter((p) => p.is_new).length },
             { label: 'Tilbud', value: products.filter((p) => p.is_on_sale).length },
           ].map((s) => (
@@ -259,7 +258,6 @@ export default function AdminPage() {
                   <th className="text-left px-4 py-3 font-medium text-gray-600">ASIN</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-600">Kategori</th>
                   <th className="text-right px-4 py-3 font-medium text-gray-600">Pris</th>
-                  <th className="text-center px-4 py-3 font-medium text-gray-600">Featured</th>
                   <th className="text-center px-4 py-3 font-medium text-gray-600">Ny</th>
                   <th className="text-center px-4 py-3 font-medium text-gray-600">Tilbud</th>
                   <th className="text-right px-4 py-3 font-medium text-gray-600">Handlinger</th>
@@ -310,7 +308,7 @@ export default function AdminPage() {
                         <span className="text-gray-300">—</span>
                       )}
                     </td>
-                    {(['is_featured', 'is_new', 'is_on_sale'] as const).map((flag) => (
+                    {(['is_new', 'is_on_sale'] as const).map((flag) => (
                       <td key={flag} className="px-4 py-3 text-center">
                         <button
                           onClick={() => toggleFlag(p.id, flag, p[flag])}
@@ -491,7 +489,6 @@ export default function AdminPage() {
 
               <div className="flex gap-6">
                 {[
-                  { key: 'is_featured' as const, label: 'Featured (forsiden)' },
                   { key: 'is_new' as const, label: 'Nyhed' },
                   { key: 'is_on_sale' as const, label: 'På tilbud' },
                 ].map(({ key, label }) => (
