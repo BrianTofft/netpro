@@ -81,7 +81,7 @@ export default function ProductCard({ product }: Props) {
           href={product.amazon_url}
           target="_blank"
           rel="noopener noreferrer sponsored"
-          className="block w-full text-center bg-[#E3000B] hover:bg-[#C5000A] text-[#1A1A1A] font-bold text-sm py-2.5 rounded-lg transition-colors"
+          className="block w-full text-center bg-[#FFB300] hover:bg-[#E6A000] text-[#1A1A1A] font-bold text-sm py-2.5 rounded-lg transition-colors"
         >
           Køb på Amazon
         </a>
