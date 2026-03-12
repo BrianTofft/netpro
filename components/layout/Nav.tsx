@@ -20,14 +20,16 @@ export default function Nav() {
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <Image
-            src="/logo.png"
-            alt="Netpro — Bosch Professional Partner"
-            height={44}
-            width={180}
-            className="object-contain brightness-0 invert"
-            priority
-          />
+          <div className="bg-white rounded-lg px-3 py-1.5">
+            <Image
+              src="/logo.png"
+              alt="Netpro — Bosch Professional Partner"
+              height={36}
+              width={150}
+              className="object-contain"
+              priority
+            />
+          </div>
         </Link>
 
         {/* Desktop nav */}

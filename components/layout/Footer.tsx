@@ -8,13 +8,13 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Brand */}
         <div>
-          <div className="mb-4">
+          <div className="mb-4 inline-block bg-white rounded-lg px-3 py-2">
             <Image
               src="/logo.png"
               alt="Netpro — Bosch Professional Partner"
-              height={40}
-              width={160}
-              className="object-contain brightness-0 invert"
+              height={36}
+              width={150}
+              className="object-contain"
             />
           </div>
           <p className="text-sm leading-relaxed mb-4">
