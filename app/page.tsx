@@ -19,12 +19,30 @@ export default async function HomePage() {
     <>
       <Hero />
       <USPBanner />
-      <FeaturedProducts
-        products={featured}
-        title="Udvalgte produkter"
-        subtitle="Håndplukkede Bosch Professional favoritter"
-        viewAllHref="/bore-skruemaskiner"
-      />
+
+      {/* Aktuelle tilbud — vises øverst hvis der er tilbudsprodukter */}
+      {saleProducts.length > 0 && (
+        <div className="bg-red-50 border-y border-red-100 py-2">
+          <FeaturedProducts
+            products={saleProducts}
+            title="🔥 Aktuelle tilbud"
+            subtitle="Begrænsede tilbud på professionelt Bosch-udstyr"
+            viewAllHref="/tilbud"
+          />
+        </div>
+      )}
+
+      {/* Udvalgte produkter */}
+      {featured.length > 0 && (
+        <FeaturedProducts
+          products={featured}
+          title="Udvalgte produkter"
+          subtitle="Håndplukkede Bosch Professional favoritter"
+          viewAllHref="/bore-skruemaskiner"
+        />
+      )}
+
+      {/* Nyheder */}
       {newProducts.length > 0 && (
         <FeaturedProducts
           products={newProducts}
@@ -33,16 +51,7 @@ export default async function HomePage() {
           viewAllHref="/nyheder"
         />
       )}
-      {saleProducts.length > 0 && (
-        <div className="bg-[#003DA5]/5 py-2 rounded-2xl mx-4">
-          <FeaturedProducts
-            products={saleProducts}
-            title="Aktuelle tilbud"
-            subtitle="Spar på professionelt Bosch-udstyr"
-            viewAllHref="/tilbud"
-          />
-        </div>
-      )}
+
       <HowItWorks />
       <WhyNetpro />
       <Testimonials />
