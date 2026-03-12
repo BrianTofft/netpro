@@ -4,7 +4,7 @@ import { CATEGORIES } from '@/lib/categories'
 
 export default function Footer() {
   return (
-    <footer className="bg-[#1A1A1A] text-gray-400 mt-16">
+    <footer className="bg-[#1C3A6E] text-blue-200 mt-16">
       <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Brand */}
         <div>
@@ -83,12 +83,12 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-white/10 py-4 px-4 max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-600">
+      <div className="border-t border-white/10 py-4 px-4 max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-blue-300">
         <span>© {new Date().getFullYear()} NETPRO. Alle rettigheder forbeholdes.</span>
         <div className="flex gap-4">
-          <Link href="/privatlivspolitik" className="hover:text-gray-400 transition-colors">Privatlivspolitik</Link>
-          <Link href="/handelsbetingelser" className="hover:text-gray-400 transition-colors">Handelsbetingelser</Link>
-          <Link href="/cookies" className="hover:text-gray-400 transition-colors">Cookies</Link>
+          <Link href="/privatlivspolitik" className="hover:text-white transition-colors">Privatlivspolitik</Link>
+          <Link href="/handelsbetingelser" className="hover:text-white transition-colors">Handelsbetingelser</Link>
+          <Link href="/cookies" className="hover:text-white transition-colors">Cookies</Link>
         </div>
       </div>
     </footer>
