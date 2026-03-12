@@ -15,6 +15,10 @@ export default async function HomePage() {
     getSaleProducts(),
   ])
 
+  // Undgå dubletter — vis ikke udvalgte produkter der allerede vises under tilbud
+  const saleIds = new Set(saleProducts.map((p) => p.id))
+  const featuredOnly = featured.filter((p) => !saleIds.has(p.id))
+
   return (
     <>
       <Hero />
@@ -32,10 +36,10 @@ export default async function HomePage() {
         </div>
       )}
 
-      {/* Udvalgte produkter */}
-      {featured.length > 0 && (
+      {/* Udvalgte produkter — kun dem der ikke allerede vises under tilbud */}
+      {featuredOnly.length > 0 && (
         <FeaturedProducts
-          products={featured}
+          products={featuredOnly}
           title="Udvalgte produkter"
           subtitle="Håndplukkede Bosch Professional favoritter"
           viewAllHref="/bore-skruemaskiner"
