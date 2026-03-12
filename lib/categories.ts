@@ -77,9 +77,16 @@ export const CATEGORIES: Category[] = [
     icon: '⚙️',
   },
   {
-    slug: 'slibevaerktoj',
-    name: 'Slibeværktøj',
+    slug: 'skaere-slibemaskiner',
+    name: 'Skære- og slibemaskiner',
     icon: '✨',
+    subs: [
+      { slug: 'vinkelslibere', name: 'Vinkelslibere' },
+      { slug: 'excenterslibere', name: 'Excenterslibere' },
+      { slug: 'baandslibere', name: 'Båndslibere' },
+      { slug: 'pudsemaskiner', name: 'Pudsemaskiner' },
+      { slug: 'hovle', name: 'Høvle' },
+    ],
   },
   {
     slug: 'stovsugere',
