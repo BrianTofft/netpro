@@ -22,7 +22,7 @@ export default function Footer() {
           </p>
           <div className="text-sm space-y-1">
             <div>📍 Industrivej 21, 4000 Roskilde</div>
-            <div>📞 <a href="tel:+4570202020" className="hover:text-white transition-colors">+45 70 20 20 20</a></div>
+            <div>📞 <a href="tel:+4552400088" className="hover:text-white transition-colors">+45 52 40 00 88</a></div>
             <div>✉️ <a href="mailto:info@netpro.dk" className="hover:text-white transition-colors">info@netpro.dk</a></div>
           </div>
         </div>
