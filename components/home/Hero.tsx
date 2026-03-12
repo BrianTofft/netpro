@@ -65,9 +65,9 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Højre — kategori-grid */}
+          {/* Højre — kategori-grid (alle 11) */}
           <div className="hidden lg:grid grid-cols-3 gap-3">
-            {CATEGORIES.slice(0, 9).map((cat) => (
+            {CATEGORIES.map((cat) => (
               <Link
                 key={cat.slug}
                 href={`/${cat.slug}`}
