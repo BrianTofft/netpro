@@ -7,24 +7,24 @@ import Link from 'next/link'
 
 const PANELS = [
   {
-    src: '/images/bosch-bore-skrue.jpg',
-    alt: 'Fagmand bruger Bosch Professional boremaskine',
+    src: '/images/m53_user-protection-stage_1980_webp.webp',
+    alt: 'Fagmand bruger Bosch Professional borehammer',
     label: 'Bore- & skruemaskiner',
     href: '/bore-skruemaskiner',
     gradient: 'from-[#1C3A6E] to-[#0a1f3e]',
   },
   {
-    src: '/images/bosch-save.jpg',
-    alt: 'Bosch Professional sav i brug',
+    src: '/images/m03_wood_555_webp.webp',
+    alt: 'Bosch Professional stiksav skærer i træ',
     label: 'Saveteknik',
     href: '/savevaerktoj',
-    gradient: 'from-[#2d1a0a] to-[#1a0a00]',
+    gradient: 'from-[#1a1a2d] to-[#0a0a1a]',
   },
   {
-    src: '/images/bosch-maaling.jpg',
-    alt: 'Bosch Professional måleværktøj',
-    label: 'Måleværktøj',
-    href: '/maalevaerktoj',
+    src: '/images/m53_sanding-stage_1980_webp.webp',
+    alt: 'Bosch Professional excenterslibemaskine på træ',
+    label: 'Skære- og slibemaskiner',
+    href: '/skaere-slibemaskiner',
     gradient: 'from-[#1a2d1a] to-[#0a1a0a]',
   },
 ]
