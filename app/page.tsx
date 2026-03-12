@@ -1,5 +1,6 @@
 import Hero from '@/components/home/Hero'
 import USPBanner from '@/components/home/USPBanner'
+import BoschShowcase from '@/components/home/BoschShowcase'
 import FeaturedProducts from '@/components/home/FeaturedProducts'
 import HowItWorks from '@/components/home/HowItWorks'
 import WhyNetpro from '@/components/home/WhyNetpro'
@@ -18,6 +19,7 @@ export default async function HomePage() {
     <>
       <Hero />
       <USPBanner />
+      <BoschShowcase />
 
       {/* Aktuelle tilbud */}
       {saleProducts.length > 0 && (
