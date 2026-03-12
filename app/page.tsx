@@ -2,6 +2,8 @@ import Hero from '@/components/home/Hero'
 import USPBanner from '@/components/home/USPBanner'
 import CategoryGrid from '@/components/home/CategoryGrid'
 import FeaturedProducts from '@/components/home/FeaturedProducts'
+import HowItWorks from '@/components/home/HowItWorks'
+import WhyNetpro from '@/components/home/WhyNetpro'
 import Testimonials from '@/components/home/Testimonials'
 import { getFeaturedProducts, getNewProducts, getSaleProducts } from '@/lib/products'
 
@@ -43,6 +45,8 @@ export default async function HomePage() {
           />
         </div>
       )}
+      <HowItWorks />
+      <WhyNetpro />
       <Testimonials />
     </>
   )
