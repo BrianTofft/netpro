@@ -84,7 +84,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10 py-4 px-4 max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-blue-300">
-        <span>© {new Date().getFullYear()} NETPRO. Alle rettigheder forbeholdes.</span>
+        <span>© {new Date().getFullYear()} NETPRO. Alle rettigheder forbeholdes. &nbsp;·&nbsp; Amazon Netpartner (Affiliate)</span>
         <div className="flex gap-4">
           <Link href="/privatlivspolitik" className="hover:text-white transition-colors">Privatlivspolitik</Link>
           <Link href="/handelsbetingelser" className="hover:text-white transition-colors">Handelsbetingelser</Link>

@@ -49,11 +49,11 @@ export default function HowItWorks() {
         <div className="mt-10 bg-[#F5F9FF] border border-[#D0DFF5] rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div className="text-3xl flex-shrink-0">💡</div>
           <div>
-            <div className="font-semibold text-[#1C3A6E] mb-1">Gratis og uforpligtende</div>
+            <div className="font-semibold text-[#1C3A6E] mb-1">Gratis og uforpligtende — Amazon Affiliate</div>
             <p className="text-sm text-[#4B5563] leading-relaxed">
-              NETPRO er et gratis prissammenligningssite for Bosch Professional-produkter. Vi tjener en lille kommission
-              fra Amazon.de når du køber via vores links — det koster dig ingenting ekstra. Prisen er altid den samme
-              som hvis du selv gik direkte til Amazon.
+              NETPRO er et gratis prissammenligningssite for Bosch Professional-produkter. Som Amazon Netpartner
+              (Amazon Affiliate) tjener vi en lille kommission fra Amazon.de når du køber via vores links —
+              det koster dig ingenting ekstra. Prisen er altid den samme som hvis du selv gik direkte til Amazon.
             </p>
           </div>
         </div>
