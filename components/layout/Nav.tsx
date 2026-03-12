@@ -12,8 +12,12 @@ export default function Nav() {
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-200">
       {/* Top bar — navy */}
-      <div className="bg-[#1C3A6E] text-sm py-1.5 px-4 text-center text-blue-100">
-        Gratis fragt • Min. 3 års garanti • Direkte fra Amazon.de
+      <div className="bg-[#1C3A6E] text-sm py-1.5 px-4 text-blue-100 flex items-center justify-between">
+        <span className="hidden sm:block">Gratis fragt • Min. 3 års garanti • Direkte fra Amazon.de</span>
+        <span className="sm:hidden">Gratis fragt • Min. 3 års garanti</span>
+        <a href="mailto:info@netpro.dk" className="hover:text-white transition-colors">
+          ✉️ info@netpro.dk
+        </a>
       </div>
 
       {/* Main nav */}
