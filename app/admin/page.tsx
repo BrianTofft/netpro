@@ -387,11 +387,27 @@ export default function AdminPage() {
                     className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1C3A6E]"
                   >
                     <option value="">— Vælg kategori —</option>
-                    {categories.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.parent_id ? '  ↳ ' : ''}{c.name}
-                      </option>
-                    ))}
+                    {categories
+                      .filter((c) => !c.parent_id)
+                      .sort((a, b) => a.name.localeCompare(b.name, 'da'))
+                      .map((parent) => {
+                        const subs = categories.filter((c) => c.parent_id === parent.id)
+                        return subs.length > 0 ? (
+                          <optgroup key={parent.id} label={parent.name}>
+                            {subs
+                              .sort((a, b) => a.name.localeCompare(b.name, 'da'))
+                              .map((sub) => (
+                                <option key={sub.id} value={sub.id}>
+                                  {sub.name}
+                                </option>
+                              ))}
+                          </optgroup>
+                        ) : (
+                          <option key={parent.id} value={parent.id}>
+                            {parent.name}
+                          </option>
+                        )
+                      })}
                   </select>
                 </div>
               </div>
