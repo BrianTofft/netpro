@@ -10,9 +10,9 @@ export default function Nav() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
 
   return (
-    <header className="bg-[#1C3A6E] text-white shadow-md sticky top-0 z-50">
-      {/* Top bar */}
-      <div className="bg-[#132D5E] text-sm py-1.5 px-4 text-center text-blue-200">
+    <header className="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-200">
+      {/* Top bar — navy */}
+      <div className="bg-[#1C3A6E] text-sm py-1.5 px-4 text-center text-blue-100">
         Gratis fragt • Min. 3 års garanti • Direkte fra Amazon.de
       </div>
 
@@ -20,16 +20,14 @@ export default function Nav() {
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <div className="bg-white rounded-lg px-3 py-1.5">
-            <Image
-              src="/logo.png"
-              alt="Netpro — Bosch Professional Partner"
-              height={36}
-              width={150}
-              className="object-contain"
-              priority
-            />
-          </div>
+          <Image
+            src="/logo.png"
+            alt="Netpro — Bosch Professional Partner"
+            height={44}
+            width={180}
+            className="object-contain"
+            priority
+          />
         </Link>
 
         {/* Desktop nav */}
@@ -43,18 +41,18 @@ export default function Nav() {
             >
               <Link
                 href={`/${cat.slug}`}
-                className="flex items-center gap-1 px-3 py-2 rounded text-sm font-medium hover:bg-white/10 transition-colors whitespace-nowrap"
+                className="flex items-center gap-1 px-3 py-2 rounded text-sm font-medium text-[#1C3A6E] hover:bg-[#EEF2FA] transition-colors whitespace-nowrap"
               >
                 {cat.name}
                 {cat.subs && (
-                  <svg className="w-3 h-3 opacity-70" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-3 h-3 opacity-60" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
                 )}
               </Link>
 
               {cat.subs && activeDropdown === cat.slug && (
-                <div className="absolute top-full left-0 bg-white text-[#1A1A1A] shadow-xl rounded-b-lg min-w-[220px] py-2 z-50">
+                <div className="absolute top-full left-0 bg-white text-[#1A1A1A] shadow-xl rounded-b-lg min-w-[220px] py-2 z-50 border border-gray-100">
                   {cat.subs.map((sub) => (
                     <Link
                       key={sub.slug}
@@ -73,14 +71,14 @@ export default function Nav() {
             onMouseEnter={() => setActiveDropdown('__more')}
             onMouseLeave={() => setActiveDropdown(null)}
           >
-            <button className="flex items-center gap-1 px-3 py-2 rounded text-sm font-medium hover:bg-white/10 transition-colors">
+            <button className="flex items-center gap-1 px-3 py-2 rounded text-sm font-medium text-[#1C3A6E] hover:bg-[#EEF2FA] transition-colors">
               Mere
-              <svg className="w-3 h-3 opacity-70" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-3 h-3 opacity-60" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </button>
             {activeDropdown === '__more' && (
-              <div className="absolute top-full right-0 bg-white text-[#1A1A1A] shadow-xl rounded-b-lg min-w-[220px] py-2 z-50">
+              <div className="absolute top-full right-0 bg-white text-[#1A1A1A] shadow-xl rounded-b-lg min-w-[220px] py-2 z-50 border border-gray-100">
                 {CATEGORIES.slice(6).map((cat) => (
                   <Link
                     key={cat.slug}
@@ -99,16 +97,16 @@ export default function Nav() {
         <div className="flex items-center gap-3">
           <Link
             href="/search"
-            className="hidden sm:flex items-center gap-2 bg-white/10 hover:bg-white/20 rounded-lg px-3 py-2 text-sm transition-colors"
+            className="hidden sm:flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-[#1C3A6E] rounded-lg px-3 py-2 text-sm transition-colors"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-            <span className="text-blue-200">Søg produkter...</span>
+            <span className="text-gray-500">Søg produkter...</span>
           </Link>
 
           <button
-            className="lg:hidden p-2 rounded hover:bg-white/10 transition-colors"
+            className="lg:hidden p-2 rounded text-[#1C3A6E] hover:bg-gray-100 transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Menu"
           >
@@ -125,11 +123,11 @@ export default function Nav() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="lg:hidden bg-[#132D5E] border-t border-white/10 pb-4">
+        <div className="lg:hidden bg-white border-t border-gray-200 pb-4">
           <div className="max-w-7xl mx-auto px-4 py-2">
             <Link
               href="/search"
-              className="flex items-center gap-2 bg-white/10 rounded-lg px-3 py-2 text-sm mb-3"
+              className="flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-2 text-sm text-gray-600 mb-3"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -140,7 +138,7 @@ export default function Nav() {
               <div key={cat.slug}>
                 <Link
                   href={`/${cat.slug}`}
-                  className="flex items-center gap-2 py-2.5 text-sm font-medium border-b border-white/10"
+                  className="flex items-center gap-2 py-2.5 text-sm font-medium text-[#1C3A6E] border-b border-gray-100"
                   onClick={() => setMobileOpen(false)}
                 >
                   <span>{cat.icon}</span>
@@ -150,7 +148,7 @@ export default function Nav() {
                   <Link
                     key={sub.slug}
                     href={`/${cat.slug}/${sub.slug}`}
-                    className="block pl-8 py-2 text-sm text-blue-200 hover:text-white"
+                    className="block pl-8 py-2 text-sm text-gray-500 hover:text-[#1C3A6E]"
                     onClick={() => setMobileOpen(false)}
                   >
                     {sub.name}
