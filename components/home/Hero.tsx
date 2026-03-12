@@ -34,21 +34,6 @@ export default function Hero() {
               ✓ Gratis at bruge &nbsp;·&nbsp; ✓ Ingen konto nødvendig &nbsp;·&nbsp; ✓ Min. 3 års Bosch-garanti
             </p>
 
-            <div className="flex flex-wrap gap-4 mb-10">
-              <Link
-                href="/bore-skruemaskiner"
-                className="bg-[#E3000B] hover:bg-[#C5000A] text-white font-bold px-6 py-3 rounded-lg transition-colors"
-              >
-                Se alle produkter
-              </Link>
-              <Link
-                href="/tilbud"
-                className="bg-white/10 hover:bg-white/20 text-white font-semibold px-6 py-3 rounded-lg transition-colors border border-white/20"
-              >
-                Aktuelle tilbud →
-              </Link>
-            </div>
-
             {/* Stats */}
             <div className="flex flex-wrap gap-8 text-sm">
               {[
