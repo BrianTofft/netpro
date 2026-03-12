@@ -26,7 +26,7 @@ export default function Nav() {
         <Link href="/" className="flex items-center">
           <Image
             src="/logo.png"
-            alt="Netpro — Bosch Professional Partner"
+            alt="Netpro"
             height={44}
             width={180}
             className="object-contain"

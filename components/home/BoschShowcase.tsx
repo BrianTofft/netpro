@@ -38,7 +38,7 @@ export default function BoschShowcase() {
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-1.5 text-sm text-white/70 mb-4">
             <span className="w-2 h-2 bg-[#E3000B] rounded-full" />
-            Bosch Professional Partner
+Bosch Professional
           </div>
           <h2 className="text-3xl font-bold text-white mb-3">
             Professionelt værktøj til enhver opgave
@@ -88,14 +88,14 @@ export default function BoschShowcase() {
             <div className="bg-white rounded-xl px-4 py-2">
               <Image
                 src="/logo.png"
-                alt="Netpro — Bosch Professional Partner"
+                alt="Netpro"
                 width={120}
                 height={30}
                 className="object-contain"
               />
             </div>
             <div className="text-white/60 text-sm">
-              Officiel Bosch Professional Partner
+Bosch Professional specialist
             </div>
           </div>
           <div className="flex gap-6 text-sm text-white/50">

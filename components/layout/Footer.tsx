@@ -11,7 +11,7 @@ export default function Footer() {
           <div className="mb-4 inline-block bg-white rounded-lg px-3 py-2">
             <Image
               src="/logo.png"
-              alt="Netpro — Bosch Professional Partner"
+              alt="Netpro"
               height={36}
               width={150}
               className="object-contain"

@@ -2,7 +2,7 @@ const USPS = [
   { icon: '🚚', label: 'Gratis fragt', sub: '1–2 hverdage' },
   { icon: '🛡️', label: 'Min. 3 års garanti', sub: 'Bosch Professional' },
   { icon: '💰', label: 'Bedste priser', sub: 'Under danske forhandlere' },
-  { icon: '📦', label: 'Fra Amazon.de', sub: 'Officiel forhandler' },
+  { icon: '📦', label: 'Fra Amazon.de', sub: 'Tryg handel' },
 ]
 
 export default function USPBanner() {
