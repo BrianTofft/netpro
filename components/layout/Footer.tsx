@@ -48,10 +48,6 @@ export default function Footer() {
             <li><Link href="/nyheder" className="hover:text-white transition-colors">Nyheder</Link></li>
             <li><Link href="/tilbud" className="hover:text-white transition-colors">Tilbud</Link></li>
             <li><Link href="/om-os" className="hover:text-white transition-colors">Om os</Link></li>
-            <li><Link href="/kontakt" className="hover:text-white transition-colors">Kontakt</Link></li>
-            <li><Link href="/fragt-levering" className="hover:text-white transition-colors">Fragt & levering</Link></li>
-            <li><Link href="/garanti" className="hover:text-white transition-colors">Garanti</Link></li>
-            <li><Link href="/returret" className="hover:text-white transition-colors">Returret</Link></li>
           </ul>
         </div>
 
