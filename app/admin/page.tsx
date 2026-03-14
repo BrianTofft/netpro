@@ -368,7 +368,7 @@ export default function AdminPage() {
                   />
                   {form.asin && (
                     <a
-                      href={`https://www.amazon.de/dp/${form.asin}?tag=netpro0e-21`}
+                      href={`https://www.amazon.de/dp/${form.asin}?tag=netpro0d-21`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-[#1C3A6E] hover:underline mt-1 inline-block"
