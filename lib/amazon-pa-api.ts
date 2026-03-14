@@ -65,6 +65,6 @@ export function convertEurToDkk(eurCents: number): number {
  * Bygger affiliate-link med Associate Tag
  */
 export function buildAffiliateUrl(asin: string): string {
-  const tag = process.env.AMAZON_ASSOCIATE_TAG ?? 'netpro0e-21'
+  const tag = process.env.AMAZON_ASSOCIATE_TAG ?? 'netpro0d-21'
   return `https://www.amazon.de/dp/${asin}?tag=${tag}`
 }
