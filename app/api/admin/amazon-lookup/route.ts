@@ -12,6 +12,22 @@ function extractText(html: string, pattern: RegExp): string | null {
   return m ? m[1].replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim() : null
 }
 
+// Oversæt tekst fra tysk til dansk via MyMemory API (gratis, ingen nøgle)
+async function translateToDanish(text: string): Promise<string> {
+  if (!text) return text
+  try {
+    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=de|da`
+    const res = await fetch(url, { signal: AbortSignal.timeout(5_000) })
+    const data = await res.json()
+    const translated = data?.responseData?.translatedText
+    // MyMemory returnerer originalteksten hvis oversættelse fejler
+    if (translated && translated !== text) return translated
+  } catch {
+    // Fallback til original tekst ved fejl
+  }
+  return text
+}
+
 export async function GET(req: NextRequest) {
   if (!isAuthorized(req)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -37,7 +53,6 @@ export async function GET(req: NextRequest) {
         'Cache-Control': 'no-cache',
         Pragma: 'no-cache',
       },
-      // 10 sekunder timeout
       signal: AbortSignal.timeout(10_000),
     })
 
@@ -64,7 +79,7 @@ export async function GET(req: NextRequest) {
   }
 
   // --- Titel ---
-  const title = extractText(html, /id="productTitle"[^>]*>([\s\S]*?)<\/span>/)
+  const rawTitle = extractText(html, /id="productTitle"[^>]*>([\s\S]*?)<\/span>/) ?? ''
 
   // --- Brand ---
   const brand =
@@ -73,7 +88,7 @@ export async function GET(req: NextRequest) {
     'Bosch Professional'
 
   // --- Model (fra titel) ---
-  const modelMatch = title?.match(/\b(G[A-Z]{2,3}(?:\s[\dA-Z][\w\-V]*){1,3})\b/)
+  const modelMatch = rawTitle?.match(/\b(G[A-Z]{2,3}(?:\s[\dA-Z][\w\-V]*){1,3})\b/)
   const model = modelMatch ? modelMatch[1] : null
 
   // --- Billede (højeste opløsning fra JSON data embeddet i siden) ---
@@ -86,7 +101,6 @@ export async function GET(req: NextRequest) {
   let price: number | null = null
   let originalPrice: number | null = null
 
-  // Prøv JSON-LD først
   const jsonLdMatch = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)
   if (jsonLdMatch) {
     try {
@@ -101,7 +115,6 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  // Fallback: scrape a-price-whole / a-price-fraction
   if (!price) {
     const wholeMatch = html.match(/class="a-price-whole"[^>]*>\s*([\d.,]+)/)
     const fracMatch = html.match(/class="a-price-fraction"[^>]*>\s*(\d{2})/)
@@ -113,34 +126,42 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  // Vejledende pris (stregpris)
   const strikeMatch = html.match(/class="a-text-strike"[^>]*>\s*[\s\S]*?([\d.,]+)\s*€/)
   if (strikeMatch) {
     const eur = parseFloat(strikeMatch[1].replace('.', '').replace(',', '.'))
     if (!isNaN(eur)) originalPrice = Math.round(eur * EUR_TO_DKK)
   }
 
-  // --- Features / beskrivelse ---
-  const features: string[] = []
+  // --- Features / beskrivelse (rå tysk tekst) ---
+  const rawFeatures: string[] = []
   const bulletBlock = html.match(/id="feature-bullets"[\s\S]*?<ul[\s\S]*?>([\s\S]*?)<\/ul>/)
   if (bulletBlock) {
-    const liMatches = [...bulletBlock[1].matchAll(/<span[^>]*class="[^"]*a-list-item[^"]*"[^>]*>([\s\S]*?)<\/span>/g)]
+    const liMatches = [
+      ...bulletBlock[1].matchAll(/<span[^>]*class="[^"]*a-list-item[^"]*"[^>]*>([\s\S]*?)<\/span>/g),
+    ]
     for (const m of liMatches) {
       const text = m[1].replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim()
-      if (text.length > 5) features.push(text)
+      if (text.length > 5) rawFeatures.push(text)
     }
   }
-  const description = features.length > 0 ? features.join('\n') : null
+
+  // --- Oversæt titel og features fra tysk til dansk ---
+  const [title, ...translatedFeatures] = await Promise.all([
+    translateToDanish(rawTitle),
+    ...rawFeatures.map((f) => translateToDanish(f)),
+  ])
+
+  const description = translatedFeatures.length > 0 ? translatedFeatures.join('\n') : null
 
   return NextResponse.json({
     asin,
-    title: title ?? '',
+    title,
     brand: brand.trim(),
     model,
     price,
     original_price: originalPrice,
     image_url: imageUrl,
     description,
-    features,
+    features: translatedFeatures,
   })
 }
