@@ -1,8 +1,55 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase-admin'
-import { getProductsFromAmazon, buildAffiliateUrl } from '@/lib/amazon-pa-api'
+import { buildAffiliateUrl } from '@/lib/amazon-pa-api'
 
 const PRICE_ALERT_THRESHOLD = 5 // DKK
+const EUR_TO_DKK = 7.46
+
+// Skraber pris direkte fra Amazon.de produktside (ingen PA API nødvendig)
+async function scrapePrice(asin: string): Promise<number | null> {
+  try {
+    const res = await fetch(`https://www.amazon.de/dp/${asin}`, {
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        'Accept-Language': 'de-DE,de;q=0.9,en;q=0.8',
+        Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Cache-Control': 'no-cache',
+      },
+      signal: AbortSignal.timeout(10_000),
+    })
+
+    if (!res.ok) return null
+    const html = await res.text()
+
+    if (html.includes('captcha') || html.includes('Type the characters')) return null
+
+    // Forsøg 1: JSON-LD strukturerede data
+    const jsonLdMatch = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)
+    if (jsonLdMatch) {
+      try {
+        const jsonLd = JSON.parse(jsonLdMatch[1])
+        const offers = jsonLd?.offers ?? jsonLd?.Offers
+        const priceVal = offers?.price ?? offers?.lowPrice
+        if (priceVal) return Math.round(parseFloat(priceVal) * EUR_TO_DKK)
+      } catch { /* ignorer */ }
+    }
+
+    // Forsøg 2: HTML pris-elementer
+    const wholeMatch = html.match(/class="a-price-whole"[^>]*>\s*([\d.,]+)/)
+    const fracMatch = html.match(/class="a-price-fraction"[^>]*>\s*(\d{2})/)
+    if (wholeMatch) {
+      const whole = wholeMatch[1].replace(/\./g, '').replace(',', '')
+      const frac = fracMatch ? fracMatch[1] : '00'
+      const eur = parseFloat(`${whole}.${frac}`)
+      if (!isNaN(eur)) return Math.round(eur * EUR_TO_DKK)
+    }
+
+    return null
+  } catch {
+    return null
+  }
+}
 
 // Køres dagligt via Vercel Cron (se vercel.json)
 export async function GET(req: NextRequest) {
@@ -17,7 +64,7 @@ export async function GET(req: NextRequest) {
   const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
   const { data: staleProducts } = await supabase
     .from('products')
-    .select('*')
+    .select('id, asin, title, price')
     .or(`cached_at.is.null,cached_at.lt.${cutoff}`)
     .limit(100)
 
@@ -25,64 +72,47 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ message: 'Ingen produkter at opdatere' })
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const asins = (staleProducts as any[]).map((p) => p.asin as string)
+  const alertedProducts: { title: string; asin: string; oldPrice: number; newPrice: number }[] = []
+  let updatedCount = 0
 
-  try {
-    const updated = await getProductsFromAmazon(asins)
+  for (const product of staleProducts) {
+    // Lille pause mellem requests for ikke at trigge Amazon rate-limit
+    await new Promise((r) => setTimeout(r, 1500))
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const alertedProducts: { title: string; asin: string; oldPrice: number; newPrice: number }[] = []
+    const newPrice = await scrapePrice(product.asin)
+    if (newPrice === null) continue
 
-    for (const p of updated) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const existing = (staleProducts as any[]).find((s) => s.asin === p.asin)
-      const oldPrice: number | null = existing?.price ?? null
-      const newPrice = p.price
+    const oldPrice: number | null = product.price ?? null
+    const priceChanged =
+      oldPrice !== null && Math.abs(newPrice - oldPrice) > PRICE_ALERT_THRESHOLD
 
-      const priceChanged =
-        oldPrice !== null &&
-        newPrice !== null &&
-        Math.abs(newPrice - oldPrice) > PRICE_ALERT_THRESHOLD
+    await supabase
+      .from('products')
+      .update({
+        price: newPrice,
+        amazon_url: buildAffiliateUrl(product.asin),
+        cached_at: new Date().toISOString(),
+        ...(priceChanged && {
+          price_alert: true,
+          price_changed_at: new Date().toISOString(),
+          previous_price: oldPrice,
+        }),
+      })
+      .eq('id', product.id)
 
-      await supabase
-        .from('products')
-        .update({
-          price: newPrice,
-          original_price: p.originalPrice,
-          image_url: p.imageUrl,
-          rating: p.rating,
-          review_count: p.reviewCount,
-          amazon_url: buildAffiliateUrl(p.asin),
-          cached_at: new Date().toISOString(),
-          ...(priceChanged && {
-            price_alert: true,
-            price_changed_at: new Date().toISOString(),
-            previous_price: oldPrice,
-          }),
-        })
-        .eq('asin', p.asin)
+    updatedCount++
 
-      if (priceChanged && oldPrice !== null && newPrice !== null) {
-        alertedProducts.push({
-          title: existing?.title ?? p.asin,
-          asin: p.asin,
-          oldPrice,
-          newPrice,
-        })
-      }
+    if (priceChanged && oldPrice !== null) {
+      alertedProducts.push({ title: product.title, asin: product.asin, oldPrice, newPrice })
     }
-
-    // Send én samlet email til admin hvis der er prisændringer
-    if (alertedProducts.length > 0) {
-      await sendPriceAlertEmail(alertedProducts)
-    }
-
-    return NextResponse.json({ updated: updated.length, alerts: alertedProducts.length })
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : 'Ukendt fejl'
-    return NextResponse.json({ error: msg }, { status: 500 })
   }
+
+  // Send én samlet email til admin hvis der er prisændringer
+  if (alertedProducts.length > 0) {
+    await sendPriceAlertEmail(alertedProducts)
+  }
+
+  return NextResponse.json({ updated: updatedCount, alerts: alertedProducts.length })
 }
 
 async function sendPriceAlertEmail(
