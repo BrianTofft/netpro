@@ -16,6 +16,7 @@ interface Product {
   brand: string | null
   price: number | null
   original_price: number | null
+  previous_price: number | null
   image_url: string | null
   amazon_url: string
   category_id: string | null
@@ -24,6 +25,8 @@ interface Product {
   is_featured: boolean
   is_new: boolean
   is_on_sale: boolean
+  price_alert: boolean
+  price_changed_at: string | null
   categories?: { name: string; slug: string } | null
 }
 
@@ -174,6 +177,18 @@ export default function AdminPage() {
     fetchAll(auth!)
   }
 
+  async function clearPriceAlert(id: string) {
+    await fetch('/api/admin/products', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-admin-password': auth!,
+      },
+      body: JSON.stringify({ id, price_alert: false }),
+    })
+    fetchAll(auth!)
+  }
+
   async function toggleFlag(id: string, field: 'is_featured' | 'is_new' | 'is_on_sale', current: boolean) {
     await fetch('/api/admin/products', {
       method: 'PATCH',
@@ -249,12 +264,15 @@ export default function AdminPage() {
         {/* Stats */}
         <div className="grid grid-cols-4 gap-4 mb-8">
           {[
-            { label: 'Produkter i alt', value: products.length },
-            { label: 'Nyheder', value: products.filter((p) => p.is_new).length },
-            { label: 'Tilbud', value: products.filter((p) => p.is_on_sale).length },
+            { label: 'Produkter i alt', value: products.length, alert: false },
+            { label: 'Nyheder', value: products.filter((p) => p.is_new).length, alert: false },
+            { label: 'Tilbud', value: products.filter((p) => p.is_on_sale).length, alert: false },
+            { label: 'Prisændringer', value: products.filter((p) => p.price_alert).length, alert: products.some((p) => p.price_alert) },
           ].map((s) => (
-            <div key={s.label} className="bg-white rounded-xl border border-gray-200 p-4">
-              <div className="text-2xl font-bold text-[#1C3A6E]">{s.value}</div>
+            <div key={s.label} className={`rounded-xl border p-4 ${s.alert ? 'bg-amber-50 border-amber-300' : 'bg-white border-gray-200'}`}>
+              <div className={`text-2xl font-bold ${s.alert ? 'text-amber-600' : 'text-[#1C3A6E]'}`}>
+                {s.alert && '⚠️ '}{s.value}
+              </div>
               <div className="text-sm text-gray-500">{s.label}</div>
             </div>
           ))}
@@ -303,7 +321,7 @@ export default function AdminPage() {
                   </tr>
                 )}
                 {filtered.map((p) => (
-                  <tr key={p.id} className="hover:bg-gray-50">
+                  <tr key={p.id} className={`hover:bg-gray-50 ${p.price_alert ? 'bg-amber-50' : ''}`}>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
                         {p.image_url ? (
@@ -316,6 +334,11 @@ export default function AdminPage() {
                         <div>
                           <div className="font-medium text-gray-900 max-w-xs truncate">{p.title}</div>
                           {p.brand && <div className="text-xs text-gray-400">{p.brand}</div>}
+                          {p.price_alert && p.previous_price != null && (
+                            <div className="text-xs text-amber-600 font-medium mt-0.5">
+                              ⚠️ Pris ændret fra {p.previous_price.toLocaleString('da-DK')} kr.
+                            </div>
+                          )}
                         </div>
                       </div>
                     </td>
@@ -354,6 +377,15 @@ export default function AdminPage() {
                       </td>
                     ))}
                     <td className="px-4 py-3 text-right">
+                      {p.price_alert && (
+                        <button
+                          onClick={() => clearPriceAlert(p.id)}
+                          className="text-amber-600 hover:text-amber-800 mr-3 text-xs font-medium"
+                          title="Marker prisændring som set"
+                        >
+                          Kvittér ✓
+                        </button>
+                      )}
                       <button
                         onClick={() => openEdit(p)}
                         className="text-gray-400 hover:text-[#1C3A6E] mr-3 text-xs"
