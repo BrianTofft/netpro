@@ -56,6 +56,8 @@ export default function AdminPage() {
   const [form, setForm] = useState(EMPTY_FORM)
   const [saving, setSaving] = useState(false)
   const [search, setSearch] = useState('')
+  const [fetching, setFetching] = useState(false)
+  const [fetchError, setFetchError] = useState('')
 
   // Gendan session fra sessionStorage
   useEffect(() => {
@@ -116,6 +118,36 @@ export default function AdminPage() {
       is_on_sale: p.is_on_sale,
     })
     setShowForm(true)
+  }
+
+  async function fetchFromAmazon() {
+    if (!form.asin || form.asin.length < 10) return
+    setFetching(true)
+    setFetchError('')
+    try {
+      const res = await fetch(`/api/admin/amazon-lookup?asin=${form.asin.trim()}`, {
+        headers: { 'x-admin-password': auth! },
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setFetchError(data.error ?? 'Ukendt fejl')
+        return
+      }
+      setForm((f) => ({
+        ...f,
+        title: data.title || f.title,
+        brand: data.brand || f.brand,
+        model: data.model || f.model,
+        price: data.price?.toString() || f.price,
+        original_price: data.original_price?.toString() || f.original_price,
+        image_url: data.image_url || f.image_url,
+        description: data.description || f.description,
+      }))
+    } catch {
+      setFetchError('Netværksfejl — prøv igen')
+    } finally {
+      setFetching(false)
+    }
   }
 
   async function handleSave(e: React.FormEvent) {
@@ -366,15 +398,40 @@ export default function AdminPage() {
                     className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1C3A6E]"
                     disabled={!!editProduct}
                   />
-                  {form.asin && (
-                    <a
-                      href={`https://www.amazon.de/dp/${form.asin}?tag=netpro0d-21`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-[#1C3A6E] hover:underline mt-1 inline-block"
-                    >
-                      Åbn på Amazon.de →
-                    </a>
+                  <div className="flex items-center gap-2 mt-1">
+                    {form.asin && (
+                      <a
+                        href={`https://www.amazon.de/dp/${form.asin}?tag=netpro0d-21`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-[#1C3A6E] hover:underline"
+                      >
+                        Åbn på Amazon.de →
+                      </a>
+                    )}
+                    {!editProduct && (
+                      <button
+                        type="button"
+                        onClick={fetchFromAmazon}
+                        disabled={fetching || form.asin.length < 10}
+                        className="ml-auto flex items-center gap-1.5 bg-amber-50 border border-amber-300 text-amber-800 px-3 py-1 rounded-md text-xs font-medium hover:bg-amber-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                      >
+                        {fetching ? (
+                          <>
+                            <svg className="animate-spin w-3 h-3" viewBox="0 0 24 24" fill="none">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                            </svg>
+                            Henter...
+                          </>
+                        ) : (
+                          <>🔍 Hent fra Amazon</>
+                        )}
+                      </button>
+                    )}
+                  </div>
+                  {fetchError && (
+                    <p className="text-red-500 text-xs mt-1">{fetchError}</p>
                   )}
                 </div>
                 <div>
