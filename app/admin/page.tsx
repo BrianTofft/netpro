@@ -136,7 +136,6 @@ export default function AdminPage() {
       setForm((f) => ({
         ...f,
         title: data.title || f.title,
-        brand: data.brand || f.brand,
         model: data.model || f.model,
         price: data.price?.toString() || f.price,
         original_price: data.original_price?.toString() || f.original_price,
