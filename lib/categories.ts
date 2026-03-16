@@ -69,6 +69,7 @@ export const CATEGORIES: Category[] = [
       { slug: 'stiksave', name: 'Stiksave' },
       { slug: 'bajonetsave', name: 'Bajonetsave' },
       { slug: 'kadesave', name: 'Kædesave' },
+      { slug: 'kap-geringssave', name: 'Kap-/ geringssave' },
       { slug: 'tilbehor-save', name: 'Tilbehør til save' },
     ],
   },
