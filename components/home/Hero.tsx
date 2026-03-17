@@ -3,12 +3,14 @@ import { CATEGORIES } from '@/lib/categories'
 
 export default function Hero() {
   return (
-    <section className="bg-gradient-to-br from-[#1C3A6E] via-[#2A4E8C] to-[#132D5E] text-white overflow-hidden relative">
-      {/* Baggrundsgløde */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#E3000B] rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2" />
-      </div>
+    <section className="text-white overflow-hidden relative">
+      {/* Baggrundsbillede */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/hero-bg.jpg')" }}
+      />
+      {/* Mørkt overlay */}
+      <div className="absolute inset-0 bg-[#0d1f3c]/75" />
 
       <div className="max-w-7xl mx-auto px-4 py-16 relative">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
