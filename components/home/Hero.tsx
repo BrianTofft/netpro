@@ -58,10 +58,10 @@ export default function Hero() {
               <Link
                 key={cat.slug}
                 href={`/${cat.slug}`}
-                className="bg-white/10 hover:bg-white/20 border border-white/10 hover:border-white/30 rounded-xl p-4 flex flex-col items-center gap-2 text-center transition-all group"
+                className="bg-black/40 hover:bg-black/55 backdrop-blur-sm border border-white/20 hover:border-white/40 rounded-xl p-4 flex flex-col items-center gap-2 text-center transition-all group"
               >
                 <span className="text-3xl">{cat.icon}</span>
-                <span className="text-xs font-medium text-blue-100 group-hover:text-white leading-tight">
+                <span className="text-xs font-medium text-white/80 group-hover:text-white leading-tight">
                   {cat.name}
                 </span>
               </Link>
